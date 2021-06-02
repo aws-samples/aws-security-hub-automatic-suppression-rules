@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sechub_suppression</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>sechub_suppression</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/jjjoy/Workdocs/src/blogs/Sechub-suppression-blog/sechub_batch_update/sechub_suppression.py">/Users/jjjoy/Workdocs/src/blogs/Sechub-suppression-blog/sechub_batch_update/sechub_suppression.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="aws_cdk.core.html">aws_cdk.core</a><br>
+</td><td width="25%" valign=top><a href="aws_cdk.aws_events_targets.html">aws_cdk.aws_events_targets</a><br>
+</td><td width="25%" valign=top><a href="aws_cdk.aws_events.html">aws_cdk.aws_events</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>(<a href="constructs.html#Construct">constructs.Construct</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sechub_suppression.html#SecurityHubSuppression">SecurityHubSuppression</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SecurityHubSuppression">class <strong>SecurityHubSuppression</strong></a>(<a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#SecurityHubSuppression">SecurityHubSuppression</a>(*args:&nbsp;Any,&nbsp;**kwargs)&nbsp;-&amp;gt;&nbsp;Any<br>
+&nbsp;<br>
+CDK&nbsp;<a href="aws_cdk.core.html#Construct">Construct</a>&nbsp;which&nbsp;creates&nbsp;the&nbsp;CloudWatch&nbsp;events&nbsp;pattern<br>
+&nbsp;<br>
+props['generator_ids']:&nbsp;Security&nbsp;Hub&nbsp;generator&nbsp;IDs&nbsp;to&nbsp;suppress<br>
+props['queue']:&nbsp;Queue&nbsp;to&nbsp;batch&nbsp;findings&nbsp;and&nbsp;is&nbsp;that&nbsp;target&nbsp;of&nbsp;the&nbsp;Security&nbsp;Hub&nbsp;suppression&nbsp;event<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sechub_suppression.html#SecurityHubSuppression">SecurityHubSuppression</a></dd>
+<dd><a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a></dd>
+<dd><a href="constructs.html#Construct">constructs.Construct</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SecurityHubSuppression-__init__"><strong>__init__</strong></a>(self, scope: aws_cdk.core.Construct, construct_id: str, props, **kwargs) -&gt; None</dt><dd><tt>:param&nbsp;scope:&nbsp;-<br>
+:param&nbsp;id:&nbsp;-</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>:<br>
+<dl><dt><a name="SecurityHubSuppression-is_construct"><strong>is_construct</strong></a>(x: Any) -&gt; bool<font color="#909090"><font face="helvetica, arial"> from <a href="jsii._runtime.html#JSIIMeta">jsii._runtime.JSIIMeta</a></font></font></dt><dd><tt>Return&nbsp;whether&nbsp;the&nbsp;given&nbsp;object&nbsp;is&nbsp;a&nbsp;<a href="aws_cdk.core.html#Construct">Construct</a>.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;-</tt></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>:<br>
+<dl><dt><strong>node</strong></dt>
+<dd><tt>The&nbsp;construct&nbsp;tree&nbsp;node&nbsp;associated&nbsp;with&nbsp;this&nbsp;construct.</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>:<br>
+<dl><dt><strong>__jsii_ifaces__</strong> = [&lt;class 'constructs.IConstruct'&gt;, &lt;class 'aws_cdk.core.IConstruct'&gt;]</dl>
+
+<dl><dt><strong>__jsii_type__</strong> = '@aws-cdk/core.Construct'</dl>
+
+<hr>
+Methods inherited from <a href="constructs.html#Construct">constructs.Construct</a>:<br>
+<dl><dt><a name="SecurityHubSuppression-to_string"><strong>to_string</strong></a>(self) -&gt; str</dt><dd><tt>Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;construct.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="constructs.html#Construct">constructs.Construct</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

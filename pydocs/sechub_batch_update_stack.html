@@ -1,0 +1,488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sechub_batch_update_stack</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>sechub_batch_update_stack</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/jjjoy/Workdocs/src/blogs/Sechub-suppression-blog/sechub_batch_update/sechub_batch_update_stack.py">/Users/jjjoy/Workdocs/src/blogs/Sechub-suppression-blog/sechub_batch_update/sechub_batch_update_stack.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="aws_cdk.aws_lambda.html">aws_cdk.aws_lambda</a><br>
+<a href="aws_cdk.aws_kms.html">aws_cdk.aws_kms</a><br>
+</td><td width="25%" valign=top><a href="aws_cdk.aws_lambda_event_sources.html">aws_cdk.aws_lambda_event_sources</a><br>
+<a href="aws_cdk.core.html">aws_cdk.core</a><br>
+</td><td width="25%" valign=top><a href="aws_cdk.aws_iam.html">aws_cdk.aws_iam</a><br>
+<a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="aws_cdk.aws_sqs.html">aws_cdk.aws_sqs</a><br>
+<a href="subprocess.html">subprocess</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a>(<a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sechub_batch_update_stack.html#SechubBatchUpdateStack">SechubBatchUpdateStack</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SechubBatchUpdateStack">class <strong>SechubBatchUpdateStack</strong></a>(<a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#SechubBatchUpdateStack">SechubBatchUpdateStack</a>(*args:&nbsp;Any,&nbsp;**kwargs)&nbsp;-&amp;gt;&nbsp;Any<br>
+&nbsp;<br>
+Creates&nbsp;stack&nbsp;which&nbsp;deploys&nbsp;suppression&nbsp;of&nbsp;Security&nbsp;Hub&nbsp;findings<br>
+&nbsp;<br>
+account_numbers_parameter:&nbsp;Cloudformation&nbsp;parameter&nbsp;which&nbsp;takes&nbsp;comma&nbsp;separated&nbsp;account&nbsp;number&nbsp;values&nbsp;to&nbsp;which&nbsp;Security&nbsp;Hub&nbsp;suppression&nbsp;applies&nbsp;to<br>
+generator_ids_parameter:&nbsp;Cloudformation&nbsp;parameter&nbsp;which&nbsp;asks&nbsp;for&nbsp;Security&nbsp;Hub&nbsp;generator&nbsp;IDs&nbsp;to&nbsp;suppress<br>
+&nbsp;<br>
+<a href="aws_cdk.core.html#Stack">Stack</a>&nbsp;creates&nbsp;the&nbsp;following&nbsp;resources.<br>
+&nbsp;<br>
+batch_lambda:&nbsp;Lambda&nbsp;which&nbsp;invokes&nbsp;the&nbsp;Security&nbsp;Hub&nbsp;batch_update_findings<br>
+batch_lambda_role:&nbsp;IAM&nbsp;role&nbsp;which&nbsp;is&nbsp;to&nbsp;be&nbsp;used&nbsp;by&nbsp;Lambda&nbsp;function&nbsp;to&nbsp;suppress&nbsp;SecurityHub&nbsp;findings<br>
+queue:&nbsp;Encrypted&nbsp;queue&nbsp;to&nbsp;batch&nbsp;Security&nbsp;Hub&nbsp;findings&nbsp;that&nbsp;will&nbsp;be&nbsp;suppressed.&nbsp;Target&nbsp;is&nbsp;the&nbsp;batch_lambda&nbsp;for&nbsp;suppression.<br>
+dead_letter_queue:&nbsp;Encrypted&nbsp;SQS&nbsp;dead&nbsp;letter&nbsp;queue&nbsp;to&nbsp;hold&nbsp;unprocessed&nbsp;Security&nbsp;Hub&nbsp;findings&nbsp;which&nbsp;could&nbsp;not&nbsp;be&nbsp;processed&nbsp;by&nbsp;the&nbsp;Lambda<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="sechub_batch_update_stack.html#SechubBatchUpdateStack">SechubBatchUpdateStack</a></dd>
+<dd><a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a></dd>
+<dd><a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a></dd>
+<dd><a href="constructs.html#Construct">constructs.Construct</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SechubBatchUpdateStack-__init__"><strong>__init__</strong></a>(self, scope: aws_cdk.core.Construct, construct_id: str, **kwargs) -&gt; None</dt><dd><tt>Creates&nbsp;a&nbsp;new&nbsp;stack.<br>
+&nbsp;<br>
+:param&nbsp;scope:&nbsp;Parent&nbsp;of&nbsp;this&nbsp;stack,&nbsp;usually&nbsp;an&nbsp;``App``&nbsp;or&nbsp;a&nbsp;``Stage``,&nbsp;but&nbsp;could&nbsp;be&nbsp;any&nbsp;construct.<br>
+:param&nbsp;id:&nbsp;The&nbsp;construct&nbsp;ID&nbsp;of&nbsp;this&nbsp;stack.&nbsp;If&nbsp;``stackName``&nbsp;is&nbsp;not&nbsp;explicitly&nbsp;defined,&nbsp;this&nbsp;id&nbsp;(and&nbsp;any&nbsp;parent&nbsp;IDs)&nbsp;will&nbsp;be&nbsp;used&nbsp;to&nbsp;determine&nbsp;the&nbsp;physical&nbsp;ID&nbsp;of&nbsp;the&nbsp;stack.<br>
+:param&nbsp;analytics_reporting:&nbsp;Include&nbsp;runtime&nbsp;versioning&nbsp;information&nbsp;in&nbsp;this&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>.&nbsp;Default:&nbsp;``analyticsReporting``&nbsp;setting&nbsp;of&nbsp;containing&nbsp;``App``,&nbsp;or&nbsp;value&nbsp;of&nbsp;'aws:cdk:version-reporting'&nbsp;context&nbsp;key<br>
+:param&nbsp;description:&nbsp;A&nbsp;description&nbsp;of&nbsp;the&nbsp;stack.&nbsp;Default:&nbsp;-&nbsp;No&nbsp;description.<br>
+:param&nbsp;env:&nbsp;The&nbsp;AWS&nbsp;environment&nbsp;(account/region)&nbsp;where&nbsp;this&nbsp;stack&nbsp;will&nbsp;be&nbsp;deployed.&nbsp;Set&nbsp;the&nbsp;``region``/``account``&nbsp;fields&nbsp;of&nbsp;``env``&nbsp;to&nbsp;either&nbsp;a&nbsp;concrete&nbsp;value&nbsp;to&nbsp;select&nbsp;the&nbsp;indicated&nbsp;environment&nbsp;(recommended&nbsp;for&nbsp;production&nbsp;stacks),&nbsp;or&nbsp;to&nbsp;the&nbsp;values&nbsp;of&nbsp;environment&nbsp;variables&nbsp;``CDK_DEFAULT_REGION``/``CDK_DEFAULT_ACCOUNT``&nbsp;to&nbsp;let&nbsp;the&nbsp;target&nbsp;environment&nbsp;depend&nbsp;on&nbsp;the&nbsp;AWS&nbsp;credentials/configuration&nbsp;that&nbsp;the&nbsp;CDK&nbsp;CLI&nbsp;is&nbsp;executed&nbsp;under&nbsp;(recommended&nbsp;for&nbsp;development&nbsp;stacks).&nbsp;If&nbsp;the&nbsp;``<a href="aws_cdk.core.html#Stack">Stack</a>``&nbsp;is&nbsp;instantiated&nbsp;inside&nbsp;a&nbsp;``Stage``,&nbsp;any&nbsp;undefined&nbsp;``region``/``account``&nbsp;fields&nbsp;from&nbsp;``env``&nbsp;will&nbsp;default&nbsp;to&nbsp;the&nbsp;same&nbsp;field&nbsp;on&nbsp;the&nbsp;encompassing&nbsp;``Stage``,&nbsp;if&nbsp;configured&nbsp;there.&nbsp;If&nbsp;either&nbsp;``region``&nbsp;or&nbsp;``account``&nbsp;are&nbsp;not&nbsp;set&nbsp;nor&nbsp;inherited&nbsp;from&nbsp;``Stage``,&nbsp;the&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>&nbsp;will&nbsp;be&nbsp;considered&nbsp;"*environment-agnostic*"".&nbsp;Environment-agnostic&nbsp;stacks&nbsp;can&nbsp;be&nbsp;deployed&nbsp;to&nbsp;any&nbsp;environment&nbsp;but&nbsp;may&nbsp;not&nbsp;be&nbsp;able&nbsp;to&nbsp;take&nbsp;advantage&nbsp;of&nbsp;all&nbsp;features&nbsp;of&nbsp;the&nbsp;CDK.&nbsp;For&nbsp;example,&nbsp;they&nbsp;will&nbsp;not&nbsp;be&nbsp;able&nbsp;to&nbsp;use&nbsp;environmental&nbsp;context&nbsp;lookups&nbsp;such&nbsp;as&nbsp;``ec2.Vpc.fromLookup``&nbsp;and&nbsp;will&nbsp;not&nbsp;automatically&nbsp;translate&nbsp;Service&nbsp;Principals&nbsp;to&nbsp;the&nbsp;right&nbsp;format&nbsp;based&nbsp;on&nbsp;the&nbsp;environment's&nbsp;AWS&nbsp;partition,&nbsp;and&nbsp;other&nbsp;such&nbsp;enhancements.&nbsp;Default:&nbsp;-&nbsp;The&nbsp;environment&nbsp;of&nbsp;the&nbsp;containing&nbsp;``Stage``&nbsp;if&nbsp;available,&nbsp;otherwise&nbsp;create&nbsp;the&nbsp;stack&nbsp;will&nbsp;be&nbsp;environment-agnostic.<br>
+:param&nbsp;stack_name:&nbsp;Name&nbsp;to&nbsp;deploy&nbsp;the&nbsp;stack&nbsp;with.&nbsp;Default:&nbsp;-&nbsp;Derived&nbsp;from&nbsp;construct&nbsp;path.<br>
+:param&nbsp;synthesizer:&nbsp;Synthesis&nbsp;method&nbsp;to&nbsp;use&nbsp;while&nbsp;deploying&nbsp;this&nbsp;stack.&nbsp;Default:&nbsp;-&nbsp;``DefaultStackSynthesizer``&nbsp;if&nbsp;the&nbsp;``@aws-cdk/core:newStyleStackSynthesis``&nbsp;feature&nbsp;flag&nbsp;is&nbsp;set,&nbsp;``LegacyStackSynthesizer``&nbsp;otherwise.<br>
+:param&nbsp;tags:&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>&nbsp;tags&nbsp;that&nbsp;will&nbsp;be&nbsp;applied&nbsp;to&nbsp;all&nbsp;the&nbsp;taggable&nbsp;resources&nbsp;and&nbsp;the&nbsp;stack&nbsp;itself.&nbsp;Default:&nbsp;{}<br>
+:param&nbsp;termination_protection:&nbsp;Whether&nbsp;to&nbsp;enable&nbsp;termination&nbsp;protection&nbsp;for&nbsp;this&nbsp;stack.&nbsp;Default:&nbsp;false</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-create_dependencies_layer"><strong>create_dependencies_layer</strong></a>(self, id: str, requirements_path: str, output_dir: str) -&gt; aws_cdk.aws_lambda.LayerVersion</dt></dl>
+
+<hr>
+Methods inherited from <a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a>:<br>
+<dl><dt><a name="SechubBatchUpdateStack-add_dependency"><strong>add_dependency</strong></a>(self, target: 'Stack', reason: Optional[str] = None) -&gt; None</dt><dd><tt>Add&nbsp;a&nbsp;dependency&nbsp;between&nbsp;this&nbsp;stack&nbsp;and&nbsp;another&nbsp;stack.<br>
+&nbsp;<br>
+This&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;define&nbsp;dependencies&nbsp;between&nbsp;any&nbsp;two&nbsp;stacks&nbsp;within&nbsp;an<br>
+app,&nbsp;and&nbsp;also&nbsp;supports&nbsp;nested&nbsp;stacks.<br>
+&nbsp;<br>
+:param&nbsp;target:&nbsp;-<br>
+:param&nbsp;reason:&nbsp;-</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-add_docker_image_asset"><strong>add_docker_image_asset</strong></a>(self, *, source_hash: str, directory_name: Optional[str] = None, docker_build_args: Optional[Mapping[str, str]] = None, docker_build_target: Optional[str] = None, docker_file: Optional[str] = None, executable: Optional[Sequence[str]] = None, repository_name: Optional[str] = None) -&gt; aws_cdk.core.DockerImageAssetLocation</dt><dd><tt>(deprecated)&nbsp;Register&nbsp;a&nbsp;docker&nbsp;image&nbsp;asset&nbsp;on&nbsp;this&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>.<br>
+&nbsp;<br>
+:param&nbsp;source_hash:&nbsp;The&nbsp;hash&nbsp;of&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;docker&nbsp;build&nbsp;context.&nbsp;This&nbsp;hash&nbsp;is&nbsp;used&nbsp;throughout&nbsp;the&nbsp;system&nbsp;to&nbsp;identify&nbsp;this&nbsp;image&nbsp;and&nbsp;avoid&nbsp;duplicate&nbsp;work&nbsp;in&nbsp;case&nbsp;the&nbsp;source&nbsp;did&nbsp;not&nbsp;change.&nbsp;NOTE:&nbsp;this&nbsp;means&nbsp;that&nbsp;if&nbsp;you&nbsp;wish&nbsp;to&nbsp;update&nbsp;your&nbsp;docker&nbsp;image,&nbsp;you&nbsp;must&nbsp;make&nbsp;a&nbsp;modification&nbsp;to&nbsp;the&nbsp;source&nbsp;(e.g.&nbsp;add&nbsp;some&nbsp;metadata&nbsp;to&nbsp;your&nbsp;Dockerfile).<br>
+:param&nbsp;directory_name:&nbsp;The&nbsp;directory&nbsp;where&nbsp;the&nbsp;Dockerfile&nbsp;is&nbsp;stored,&nbsp;must&nbsp;be&nbsp;relative&nbsp;to&nbsp;the&nbsp;cloud&nbsp;assembly&nbsp;root.&nbsp;Default:&nbsp;-&nbsp;Exactly&nbsp;one&nbsp;of&nbsp;``directoryName``&nbsp;and&nbsp;``executable``&nbsp;is&nbsp;required<br>
+:param&nbsp;docker_build_args:&nbsp;Build&nbsp;args&nbsp;to&nbsp;pass&nbsp;to&nbsp;the&nbsp;``docker&nbsp;build``&nbsp;command.&nbsp;Since&nbsp;Docker&nbsp;build&nbsp;arguments&nbsp;are&nbsp;resolved&nbsp;before&nbsp;deployment,&nbsp;keys&nbsp;and&nbsp;values&nbsp;cannot&nbsp;refer&nbsp;to&nbsp;unresolved&nbsp;tokens&nbsp;(such&nbsp;as&nbsp;``lambda.functionArn``&nbsp;or&nbsp;``queue.queueUrl``).&nbsp;Only&nbsp;allowed&nbsp;when&nbsp;``directoryName``&nbsp;is&nbsp;specified.&nbsp;Default:&nbsp;-&nbsp;no&nbsp;build&nbsp;args&nbsp;are&nbsp;passed<br>
+:param&nbsp;docker_build_target:&nbsp;Docker&nbsp;target&nbsp;to&nbsp;build&nbsp;to.&nbsp;Only&nbsp;allowed&nbsp;when&nbsp;``directoryName``&nbsp;is&nbsp;specified.&nbsp;Default:&nbsp;-&nbsp;no&nbsp;target<br>
+:param&nbsp;docker_file:&nbsp;Path&nbsp;to&nbsp;the&nbsp;Dockerfile&nbsp;(relative&nbsp;to&nbsp;the&nbsp;directory).&nbsp;Only&nbsp;allowed&nbsp;when&nbsp;``directoryName``&nbsp;is&nbsp;specified.&nbsp;Default:&nbsp;-&nbsp;no&nbsp;file<br>
+:param&nbsp;executable:&nbsp;An&nbsp;external&nbsp;command&nbsp;that&nbsp;will&nbsp;produce&nbsp;the&nbsp;packaged&nbsp;asset.&nbsp;The&nbsp;command&nbsp;should&nbsp;produce&nbsp;the&nbsp;name&nbsp;of&nbsp;a&nbsp;local&nbsp;Docker&nbsp;image&nbsp;on&nbsp;``stdout``.&nbsp;Default:&nbsp;-&nbsp;Exactly&nbsp;one&nbsp;of&nbsp;``directoryName``&nbsp;and&nbsp;``executable``&nbsp;is&nbsp;required<br>
+:param&nbsp;repository_name:&nbsp;(deprecated)&nbsp;ECR&nbsp;repository&nbsp;name.&nbsp;Specify&nbsp;this&nbsp;property&nbsp;if&nbsp;you&nbsp;need&nbsp;to&nbsp;statically&nbsp;address&nbsp;the&nbsp;image,&nbsp;e.g.&nbsp;from&nbsp;a&nbsp;Kubernetes&nbsp;Pod.&nbsp;Note,&nbsp;this&nbsp;is&nbsp;only&nbsp;the&nbsp;repository&nbsp;name,&nbsp;without&nbsp;the&nbsp;registry&nbsp;and&nbsp;the&nbsp;tag&nbsp;parts.&nbsp;Default:&nbsp;-&nbsp;automatically&nbsp;derived&nbsp;from&nbsp;the&nbsp;asset's&nbsp;ID.<br>
+&nbsp;<br>
+:deprecated:<br>
+&nbsp;<br>
+Use&nbsp;``stack.synthesizer.addDockerImageAsset()``&nbsp;if&nbsp;you&nbsp;are&nbsp;calling,<br>
+and&nbsp;a&nbsp;different&nbsp;``IStackSynthesizer``&nbsp;class&nbsp;if&nbsp;you&nbsp;are&nbsp;implementing.<br>
+&nbsp;<br>
+:stability:&nbsp;deprecated</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-add_file_asset"><strong>add_file_asset</strong></a>(self, *, source_hash: str, executable: Optional[Sequence[str]] = None, file_name: Optional[str] = None, packaging: Optional[aws_cdk.core.FileAssetPackaging] = None) -&gt; aws_cdk.core.FileAssetLocation</dt><dd><tt>(deprecated)&nbsp;Register&nbsp;a&nbsp;file&nbsp;asset&nbsp;on&nbsp;this&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>.<br>
+&nbsp;<br>
+:param&nbsp;source_hash:&nbsp;A&nbsp;hash&nbsp;on&nbsp;the&nbsp;content&nbsp;source.&nbsp;This&nbsp;hash&nbsp;is&nbsp;used&nbsp;to&nbsp;uniquely&nbsp;identify&nbsp;this&nbsp;asset&nbsp;throughout&nbsp;the&nbsp;system.&nbsp;If&nbsp;this&nbsp;value&nbsp;doesn't&nbsp;change,&nbsp;the&nbsp;asset&nbsp;will&nbsp;not&nbsp;be&nbsp;rebuilt&nbsp;or&nbsp;republished.<br>
+:param&nbsp;executable:&nbsp;An&nbsp;external&nbsp;command&nbsp;that&nbsp;will&nbsp;produce&nbsp;the&nbsp;packaged&nbsp;asset.&nbsp;The&nbsp;command&nbsp;should&nbsp;produce&nbsp;the&nbsp;location&nbsp;of&nbsp;a&nbsp;ZIP&nbsp;file&nbsp;on&nbsp;``stdout``.&nbsp;Default:&nbsp;-&nbsp;Exactly&nbsp;one&nbsp;of&nbsp;``directory``&nbsp;and&nbsp;``executable``&nbsp;is&nbsp;required<br>
+:param&nbsp;file_name:&nbsp;The&nbsp;path,&nbsp;relative&nbsp;to&nbsp;the&nbsp;root&nbsp;of&nbsp;the&nbsp;cloud&nbsp;assembly,&nbsp;in&nbsp;which&nbsp;this&nbsp;asset&nbsp;source&nbsp;resides.&nbsp;This&nbsp;can&nbsp;be&nbsp;a&nbsp;path&nbsp;to&nbsp;a&nbsp;file&nbsp;or&nbsp;a&nbsp;directory,&nbsp;depending&nbsp;on&nbsp;the&nbsp;packaging&nbsp;type.&nbsp;Default:&nbsp;-&nbsp;Exactly&nbsp;one&nbsp;of&nbsp;``directory``&nbsp;and&nbsp;``executable``&nbsp;is&nbsp;required<br>
+:param&nbsp;packaging:&nbsp;Which&nbsp;type&nbsp;of&nbsp;packaging&nbsp;to&nbsp;perform.&nbsp;Default:&nbsp;-&nbsp;Required&nbsp;if&nbsp;``fileName``&nbsp;is&nbsp;specified.<br>
+&nbsp;<br>
+:deprecated:<br>
+&nbsp;<br>
+Use&nbsp;``stack.synthesizer.addFileAsset()``&nbsp;if&nbsp;you&nbsp;are&nbsp;calling,<br>
+and&nbsp;a&nbsp;different&nbsp;IStackSynthesizer&nbsp;class&nbsp;if&nbsp;you&nbsp;are&nbsp;implementing.<br>
+&nbsp;<br>
+:stability:&nbsp;deprecated</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-add_transform"><strong>add_transform</strong></a>(self, transform: str) -&gt; None</dt><dd><tt>Add&nbsp;a&nbsp;Transform&nbsp;to&nbsp;this&nbsp;stack.&nbsp;A&nbsp;Transform&nbsp;is&nbsp;a&nbsp;macro&nbsp;that&nbsp;AWS&nbsp;CloudFormation&nbsp;uses&nbsp;to&nbsp;process&nbsp;your&nbsp;template.<br>
+&nbsp;<br>
+Duplicate&nbsp;values&nbsp;are&nbsp;removed&nbsp;when&nbsp;stack&nbsp;is&nbsp;synthesized.<br>
+&nbsp;<br>
+:param&nbsp;transform:&nbsp;The&nbsp;transform&nbsp;to&nbsp;add.<br>
+&nbsp;<br>
+:see:&nbsp;<a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html">https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html</a><br>
+&nbsp;<br>
+Example::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Example&nbsp;automatically&nbsp;generated&nbsp;without&nbsp;compilation.&nbsp;See&nbsp;<a href="https://github.com/aws/jsii/issues/826">https://github.com/aws/jsii/issues/826</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;stack.<a href="#SechubBatchUpdateStack-add_transform">add_transform</a>("AWS::Serverless-2016-10-31")</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-export_value"><strong>export_value</strong></a>(self, exported_value: Any, *, name: Optional[str] = None) -&gt; str</dt><dd><tt>Create&nbsp;a&nbsp;CloudFormation&nbsp;Export&nbsp;for&nbsp;a&nbsp;value.<br>
+&nbsp;<br>
+Returns&nbsp;a&nbsp;string&nbsp;representing&nbsp;the&nbsp;corresponding&nbsp;``Fn.importValue()``<br>
+expression&nbsp;for&nbsp;this&nbsp;Export.&nbsp;You&nbsp;can&nbsp;control&nbsp;the&nbsp;name&nbsp;for&nbsp;the&nbsp;export&nbsp;by<br>
+passing&nbsp;the&nbsp;``name``&nbsp;option.<br>
+&nbsp;<br>
+If&nbsp;you&nbsp;don't&nbsp;supply&nbsp;a&nbsp;value&nbsp;for&nbsp;``name``,&nbsp;the&nbsp;value&nbsp;you're&nbsp;exporting&nbsp;must&nbsp;be<br>
+a&nbsp;Resource&nbsp;attribute&nbsp;(for&nbsp;example:&nbsp;``bucket.bucketName``)&nbsp;and&nbsp;it&nbsp;will&nbsp;be<br>
+given&nbsp;the&nbsp;same&nbsp;name&nbsp;as&nbsp;the&nbsp;automatic&nbsp;cross-stack&nbsp;reference&nbsp;that&nbsp;would&nbsp;be&nbsp;created<br>
+if&nbsp;you&nbsp;used&nbsp;the&nbsp;attribute&nbsp;in&nbsp;another&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>.<br>
+&nbsp;<br>
+One&nbsp;of&nbsp;the&nbsp;uses&nbsp;for&nbsp;this&nbsp;method&nbsp;is&nbsp;to&nbsp;*remove*&nbsp;the&nbsp;relationship&nbsp;between<br>
+two&nbsp;Stacks&nbsp;established&nbsp;by&nbsp;automatic&nbsp;cross-stack&nbsp;references.&nbsp;It&nbsp;will<br>
+temporarily&nbsp;ensure&nbsp;that&nbsp;the&nbsp;CloudFormation&nbsp;Export&nbsp;still&nbsp;exists&nbsp;while&nbsp;you<br>
+remove&nbsp;the&nbsp;reference&nbsp;from&nbsp;the&nbsp;consuming&nbsp;stack.&nbsp;After&nbsp;that,&nbsp;you&nbsp;can&nbsp;remove<br>
+the&nbsp;resource&nbsp;and&nbsp;the&nbsp;manual&nbsp;export.<br>
+&nbsp;<br>
+&nbsp;<br>
+Example<br>
+&nbsp;<br>
+Here&nbsp;is&nbsp;how&nbsp;the&nbsp;process&nbsp;works.&nbsp;Let's&nbsp;say&nbsp;there&nbsp;are&nbsp;two&nbsp;stacks,<br>
+``producerStack``&nbsp;and&nbsp;``consumerStack``,&nbsp;and&nbsp;``producerStack``&nbsp;has&nbsp;a&nbsp;bucket<br>
+called&nbsp;``bucket``,&nbsp;which&nbsp;is&nbsp;referenced&nbsp;by&nbsp;``consumerStack``&nbsp;(perhaps&nbsp;because<br>
+an&nbsp;AWS&nbsp;Lambda&nbsp;Function&nbsp;writes&nbsp;into&nbsp;it,&nbsp;or&nbsp;something&nbsp;like&nbsp;that).<br>
+&nbsp;<br>
+It&nbsp;is&nbsp;not&nbsp;safe&nbsp;to&nbsp;remove&nbsp;``producerStack.bucket``&nbsp;because&nbsp;as&nbsp;the&nbsp;bucket&nbsp;is&nbsp;being<br>
+deleted,&nbsp;``consumerStack``&nbsp;might&nbsp;still&nbsp;be&nbsp;using&nbsp;it.<br>
+&nbsp;<br>
+Instead,&nbsp;the&nbsp;process&nbsp;takes&nbsp;two&nbsp;deployments:<br>
+&nbsp;<br>
+&nbsp;<br>
+Deployment&nbsp;1:&nbsp;break&nbsp;the&nbsp;relationship<br>
+&nbsp;<br>
+-&nbsp;Make&nbsp;sure&nbsp;``consumerStack``&nbsp;no&nbsp;longer&nbsp;references&nbsp;``bucket.bucketName``&nbsp;(maybe&nbsp;the&nbsp;consumer<br>
+&nbsp;&nbsp;stack&nbsp;now&nbsp;uses&nbsp;its&nbsp;own&nbsp;bucket,&nbsp;or&nbsp;it&nbsp;writes&nbsp;to&nbsp;an&nbsp;AWS&nbsp;DynamoDB&nbsp;table,&nbsp;or&nbsp;maybe&nbsp;you&nbsp;just<br>
+&nbsp;&nbsp;remove&nbsp;the&nbsp;Lambda&nbsp;Function&nbsp;altogether).<br>
+-&nbsp;In&nbsp;the&nbsp;``ProducerStack``&nbsp;class,&nbsp;call&nbsp;``this.exportValue(this.bucket.bucketName)``.&nbsp;This<br>
+&nbsp;&nbsp;will&nbsp;make&nbsp;sure&nbsp;the&nbsp;CloudFormation&nbsp;Export&nbsp;continues&nbsp;to&nbsp;exist&nbsp;while&nbsp;the&nbsp;relationship<br>
+&nbsp;&nbsp;between&nbsp;the&nbsp;two&nbsp;stacks&nbsp;is&nbsp;being&nbsp;broken.<br>
+-&nbsp;Deploy&nbsp;(this&nbsp;will&nbsp;effectively&nbsp;only&nbsp;change&nbsp;the&nbsp;``consumerStack``,&nbsp;but&nbsp;it's&nbsp;safe&nbsp;to&nbsp;deploy&nbsp;both).<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+Deployment&nbsp;2:&nbsp;remove&nbsp;the&nbsp;bucket&nbsp;resource<br>
+&nbsp;<br>
+-&nbsp;You&nbsp;are&nbsp;now&nbsp;free&nbsp;to&nbsp;remove&nbsp;the&nbsp;``bucket``&nbsp;resource&nbsp;from&nbsp;``producerStack``.<br>
+-&nbsp;Don't&nbsp;forget&nbsp;to&nbsp;remove&nbsp;the&nbsp;``exportValue()``&nbsp;call&nbsp;as&nbsp;well.<br>
+-&nbsp;Deploy&nbsp;again&nbsp;(this&nbsp;time&nbsp;only&nbsp;the&nbsp;``producerStack``&nbsp;will&nbsp;be&nbsp;changed&nbsp;--&nbsp;the&nbsp;bucket&nbsp;will&nbsp;be&nbsp;deleted).<br>
+&nbsp;<br>
+:param&nbsp;exported_value:&nbsp;-<br>
+:param&nbsp;name:&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;export&nbsp;to&nbsp;create.&nbsp;Default:&nbsp;-&nbsp;A&nbsp;name&nbsp;is&nbsp;automatically&nbsp;chosen</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-format_arn"><strong>format_arn</strong></a>(self, *, resource: str, service: str, account: Optional[str] = None, partition: Optional[str] = None, region: Optional[str] = None, resource_name: Optional[str] = None, sep: Optional[str] = None) -&gt; str</dt><dd><tt>Creates&nbsp;an&nbsp;ARN&nbsp;from&nbsp;components.<br>
+&nbsp;<br>
+If&nbsp;``partition``,&nbsp;``region``&nbsp;or&nbsp;``account``&nbsp;are&nbsp;not&nbsp;specified,&nbsp;the&nbsp;stack's<br>
+partition,&nbsp;region&nbsp;and&nbsp;account&nbsp;will&nbsp;be&nbsp;used.<br>
+&nbsp;<br>
+If&nbsp;any&nbsp;component&nbsp;is&nbsp;the&nbsp;empty&nbsp;string,&nbsp;an&nbsp;empty&nbsp;string&nbsp;will&nbsp;be&nbsp;inserted<br>
+into&nbsp;the&nbsp;generated&nbsp;ARN&nbsp;at&nbsp;the&nbsp;location&nbsp;that&nbsp;component&nbsp;corresponds&nbsp;to.<br>
+&nbsp;<br>
+The&nbsp;ARN&nbsp;will&nbsp;be&nbsp;formatted&nbsp;as&nbsp;follows:<br>
+&nbsp;<br>
+arn:{partition}:{service}:{region}:{account}:{resource}{sep}}{resource-name}<br>
+&nbsp;<br>
+The&nbsp;required&nbsp;ARN&nbsp;pieces&nbsp;that&nbsp;are&nbsp;omitted&nbsp;will&nbsp;be&nbsp;taken&nbsp;from&nbsp;the&nbsp;stack&nbsp;that<br>
+the&nbsp;'scope'&nbsp;is&nbsp;attached&nbsp;to.&nbsp;If&nbsp;all&nbsp;ARN&nbsp;pieces&nbsp;are&nbsp;supplied,&nbsp;the&nbsp;supplied&nbsp;scope<br>
+can&nbsp;be&nbsp;'undefined'.<br>
+&nbsp;<br>
+:param&nbsp;resource:&nbsp;Resource&nbsp;type&nbsp;(e.g.&nbsp;"table",&nbsp;"autoScalingGroup",&nbsp;"certificate").&nbsp;For&nbsp;some&nbsp;resource&nbsp;types,&nbsp;e.g.&nbsp;S3&nbsp;buckets,&nbsp;this&nbsp;field&nbsp;defines&nbsp;the&nbsp;bucket&nbsp;name.<br>
+:param&nbsp;service:&nbsp;The&nbsp;service&nbsp;namespace&nbsp;that&nbsp;identifies&nbsp;the&nbsp;AWS&nbsp;product&nbsp;(for&nbsp;example,&nbsp;'s3',&nbsp;'iam',&nbsp;'codepipline').<br>
+:param&nbsp;account:&nbsp;The&nbsp;ID&nbsp;of&nbsp;the&nbsp;AWS&nbsp;account&nbsp;that&nbsp;owns&nbsp;the&nbsp;resource,&nbsp;without&nbsp;the&nbsp;hyphens.&nbsp;For&nbsp;example,&nbsp;123456789012.&nbsp;Note&nbsp;that&nbsp;the&nbsp;ARNs&nbsp;for&nbsp;some&nbsp;resources&nbsp;don't&nbsp;require&nbsp;an&nbsp;account&nbsp;number,&nbsp;so&nbsp;this&nbsp;component&nbsp;might&nbsp;be&nbsp;omitted.&nbsp;Default:&nbsp;The&nbsp;account&nbsp;the&nbsp;stack&nbsp;is&nbsp;deployed&nbsp;to.<br>
+:param&nbsp;partition:&nbsp;The&nbsp;partition&nbsp;that&nbsp;the&nbsp;resource&nbsp;is&nbsp;in.&nbsp;For&nbsp;standard&nbsp;AWS&nbsp;regions,&nbsp;the&nbsp;partition&nbsp;is&nbsp;aws.&nbsp;If&nbsp;you&nbsp;have&nbsp;resources&nbsp;in&nbsp;other&nbsp;partitions,&nbsp;the&nbsp;partition&nbsp;is&nbsp;aws-partitionname.&nbsp;For&nbsp;example,&nbsp;the&nbsp;partition&nbsp;for&nbsp;resources&nbsp;in&nbsp;the&nbsp;China&nbsp;(Beijing)&nbsp;region&nbsp;is&nbsp;aws-cn.&nbsp;Default:&nbsp;The&nbsp;AWS&nbsp;partition&nbsp;the&nbsp;stack&nbsp;is&nbsp;deployed&nbsp;to.<br>
+:param&nbsp;region:&nbsp;The&nbsp;region&nbsp;the&nbsp;resource&nbsp;resides&nbsp;in.&nbsp;Note&nbsp;that&nbsp;the&nbsp;ARNs&nbsp;for&nbsp;some&nbsp;resources&nbsp;do&nbsp;not&nbsp;require&nbsp;a&nbsp;region,&nbsp;so&nbsp;this&nbsp;component&nbsp;might&nbsp;be&nbsp;omitted.&nbsp;Default:&nbsp;The&nbsp;region&nbsp;the&nbsp;stack&nbsp;is&nbsp;deployed&nbsp;to.<br>
+:param&nbsp;resource_name:&nbsp;Resource&nbsp;name&nbsp;or&nbsp;path&nbsp;within&nbsp;the&nbsp;resource&nbsp;(i.e.&nbsp;S3&nbsp;bucket&nbsp;object&nbsp;key)&nbsp;or&nbsp;a&nbsp;wildcard&nbsp;such&nbsp;as&nbsp;``"*"``.&nbsp;This&nbsp;is&nbsp;service-dependent.<br>
+:param&nbsp;sep:&nbsp;Separator&nbsp;between&nbsp;resource&nbsp;type&nbsp;and&nbsp;the&nbsp;resource.&nbsp;Can&nbsp;be&nbsp;either&nbsp;'/',&nbsp;':'&nbsp;or&nbsp;an&nbsp;empty&nbsp;string.&nbsp;Will&nbsp;only&nbsp;be&nbsp;used&nbsp;if&nbsp;resourceName&nbsp;is&nbsp;defined.&nbsp;Default:&nbsp;'/'</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-get_logical_id"><strong>get_logical_id</strong></a>(self, element: 'CfnElement') -&gt; str</dt><dd><tt>Allocates&nbsp;a&nbsp;stack-unique&nbsp;CloudFormation-compatible&nbsp;logical&nbsp;identity&nbsp;for&nbsp;a&nbsp;specific&nbsp;resource.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;``CfnElement``&nbsp;is&nbsp;created&nbsp;and&nbsp;used&nbsp;to&nbsp;render&nbsp;the<br>
+initial&nbsp;logical&nbsp;identity&nbsp;of&nbsp;resources.&nbsp;Logical&nbsp;ID&nbsp;renames&nbsp;are&nbsp;applied&nbsp;at<br>
+this&nbsp;stage.<br>
+&nbsp;<br>
+This&nbsp;method&nbsp;uses&nbsp;the&nbsp;protected&nbsp;method&nbsp;``allocateLogicalId``&nbsp;to&nbsp;render&nbsp;the<br>
+logical&nbsp;ID&nbsp;for&nbsp;an&nbsp;element.&nbsp;To&nbsp;modify&nbsp;the&nbsp;naming&nbsp;scheme,&nbsp;extend&nbsp;the&nbsp;``<a href="aws_cdk.core.html#Stack">Stack</a>``<br>
+class&nbsp;and&nbsp;override&nbsp;this&nbsp;method.<br>
+&nbsp;<br>
+:param&nbsp;element:&nbsp;The&nbsp;CloudFormation&nbsp;element&nbsp;for&nbsp;which&nbsp;a&nbsp;logical&nbsp;identity&nbsp;is&nbsp;needed.</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-parse_arn"><strong>parse_arn</strong></a>(self, arn: str, sep_if_token: Optional[str] = None, has_name: Optional[bool] = None) -&gt; aws_cdk.core.ArnComponents</dt><dd><tt>Given&nbsp;an&nbsp;ARN,&nbsp;parses&nbsp;it&nbsp;and&nbsp;returns&nbsp;components.<br>
+&nbsp;<br>
+IF&nbsp;THE&nbsp;ARN&nbsp;IS&nbsp;A&nbsp;CONCRETE&nbsp;STRING...<br>
+&nbsp;<br>
+...it&nbsp;will&nbsp;be&nbsp;parsed&nbsp;and&nbsp;validated.&nbsp;The&nbsp;separator&nbsp;(``sep``)&nbsp;will&nbsp;be&nbsp;set&nbsp;to&nbsp;'/'<br>
+if&nbsp;the&nbsp;6th&nbsp;component&nbsp;includes&nbsp;a&nbsp;'/',&nbsp;in&nbsp;which&nbsp;case,&nbsp;``resource``&nbsp;will&nbsp;be&nbsp;set<br>
+to&nbsp;the&nbsp;value&nbsp;before&nbsp;the&nbsp;'/'&nbsp;and&nbsp;``resourceName``&nbsp;will&nbsp;be&nbsp;the&nbsp;rest.&nbsp;In&nbsp;case<br>
+there&nbsp;is&nbsp;no&nbsp;'/',&nbsp;``resource``&nbsp;will&nbsp;be&nbsp;set&nbsp;to&nbsp;the&nbsp;6th&nbsp;components&nbsp;and<br>
+``resourceName``&nbsp;will&nbsp;be&nbsp;set&nbsp;to&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;string.<br>
+&nbsp;<br>
+IF&nbsp;THE&nbsp;ARN&nbsp;IS&nbsp;A&nbsp;TOKEN...<br>
+&nbsp;<br>
+...it&nbsp;cannot&nbsp;be&nbsp;validated,&nbsp;since&nbsp;we&nbsp;don't&nbsp;have&nbsp;the&nbsp;actual&nbsp;value&nbsp;yet&nbsp;at&nbsp;the<br>
+time&nbsp;of&nbsp;this&nbsp;function&nbsp;call.&nbsp;You&nbsp;will&nbsp;have&nbsp;to&nbsp;supply&nbsp;``sepIfToken``&nbsp;and<br>
+whether&nbsp;or&nbsp;not&nbsp;ARNs&nbsp;of&nbsp;the&nbsp;expected&nbsp;format&nbsp;usually&nbsp;have&nbsp;resource&nbsp;names<br>
+in&nbsp;order&nbsp;to&nbsp;parse&nbsp;it&nbsp;properly.&nbsp;The&nbsp;resulting&nbsp;``ArnComponents``&nbsp;object&nbsp;will<br>
+contain&nbsp;tokens&nbsp;for&nbsp;the&nbsp;subexpressions&nbsp;of&nbsp;the&nbsp;ARN,&nbsp;not&nbsp;string&nbsp;literals.<br>
+&nbsp;<br>
+If&nbsp;the&nbsp;resource&nbsp;name&nbsp;could&nbsp;possibly&nbsp;contain&nbsp;the&nbsp;separator&nbsp;char,&nbsp;the&nbsp;actual<br>
+resource&nbsp;name&nbsp;cannot&nbsp;be&nbsp;properly&nbsp;parsed.&nbsp;This&nbsp;only&nbsp;occurs&nbsp;if&nbsp;the&nbsp;separator<br>
+char&nbsp;is&nbsp;'/',&nbsp;and&nbsp;happens&nbsp;for&nbsp;example&nbsp;for&nbsp;S3&nbsp;object&nbsp;ARNs,&nbsp;IAM&nbsp;Role&nbsp;ARNs,<br>
+IAM&nbsp;OIDC&nbsp;Provider&nbsp;ARNs,&nbsp;etc.&nbsp;To&nbsp;properly&nbsp;extract&nbsp;the&nbsp;resource&nbsp;name&nbsp;from&nbsp;a<br>
+Tokenized&nbsp;ARN,&nbsp;you&nbsp;must&nbsp;know&nbsp;the&nbsp;resource&nbsp;type&nbsp;and&nbsp;call<br>
+``Arn.extractResourceName``.<br>
+&nbsp;<br>
+:param&nbsp;arn:&nbsp;The&nbsp;ARN&nbsp;string&nbsp;to&nbsp;parse.<br>
+:param&nbsp;sep_if_token:&nbsp;The&nbsp;separator&nbsp;used&nbsp;to&nbsp;separate&nbsp;resource&nbsp;from&nbsp;resourceName.<br>
+:param&nbsp;has_name:&nbsp;Whether&nbsp;there&nbsp;is&nbsp;a&nbsp;name&nbsp;component&nbsp;in&nbsp;the&nbsp;ARN&nbsp;at&nbsp;all.&nbsp;For&nbsp;example,&nbsp;SNS&nbsp;Topics&nbsp;ARNs&nbsp;have&nbsp;the&nbsp;'resource'&nbsp;component&nbsp;contain&nbsp;the&nbsp;topic&nbsp;name,&nbsp;and&nbsp;no&nbsp;'resourceName'&nbsp;component.<br>
+&nbsp;<br>
+:return:<br>
+&nbsp;<br>
+an&nbsp;ArnComponents&nbsp;object&nbsp;which&nbsp;allows&nbsp;access&nbsp;to&nbsp;the&nbsp;various<br>
+components&nbsp;of&nbsp;the&nbsp;ARN.</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-rename_logical_id"><strong>rename_logical_id</strong></a>(self, old_id: str, new_id: str) -&gt; None</dt><dd><tt>Rename&nbsp;a&nbsp;generated&nbsp;logical&nbsp;identities.<br>
+&nbsp;<br>
+To&nbsp;modify&nbsp;the&nbsp;naming&nbsp;scheme&nbsp;strategy,&nbsp;extend&nbsp;the&nbsp;``<a href="aws_cdk.core.html#Stack">Stack</a>``&nbsp;class&nbsp;and<br>
+override&nbsp;the&nbsp;``allocateLogicalId``&nbsp;method.<br>
+&nbsp;<br>
+:param&nbsp;old_id:&nbsp;-<br>
+:param&nbsp;new_id:&nbsp;-</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-report_missing_context"><strong>report_missing_context</strong></a>(self, *, key: str, props: Mapping[str, Any], provider: str) -&gt; None</dt><dd><tt>(deprecated)&nbsp;DEPRECATED.<br>
+&nbsp;<br>
+:param&nbsp;key:&nbsp;(deprecated)&nbsp;The&nbsp;missing&nbsp;context&nbsp;key.<br>
+:param&nbsp;props:&nbsp;(deprecated)&nbsp;A&nbsp;set&nbsp;of&nbsp;provider-specific&nbsp;options.&nbsp;(This&nbsp;is&nbsp;the&nbsp;old&nbsp;untyped&nbsp;definition,&nbsp;which&nbsp;is&nbsp;necessary&nbsp;for&nbsp;backwards&nbsp;compatibility.&nbsp;See&nbsp;cxschema&nbsp;for&nbsp;a&nbsp;type&nbsp;definition.)<br>
+:param&nbsp;provider:&nbsp;(deprecated)&nbsp;The&nbsp;provider&nbsp;from&nbsp;which&nbsp;we&nbsp;expect&nbsp;this&nbsp;context&nbsp;key&nbsp;to&nbsp;be&nbsp;obtained.&nbsp;(This&nbsp;is&nbsp;the&nbsp;old&nbsp;untyped&nbsp;definition,&nbsp;which&nbsp;is&nbsp;necessary&nbsp;for&nbsp;backwards&nbsp;compatibility.&nbsp;See&nbsp;cxschema&nbsp;for&nbsp;a&nbsp;type&nbsp;definition.)<br>
+&nbsp;<br>
+:deprecated:&nbsp;use&nbsp;``reportMissingContextKey()``<br>
+&nbsp;<br>
+:stability:&nbsp;deprecated</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-report_missing_context_key"><strong>report_missing_context_key</strong></a>(self, *, key: str, props: Union[aws_cdk.cloud_assembly_schema.AmiContextQuery, aws_cdk.cloud_assembly_schema.AvailabilityZonesContextQuery, aws_cdk.cloud_assembly_schema.HostedZoneContextQuery, aws_cdk.cloud_assembly_schema.SSMParameterContextQuery, aws_cdk.cloud_assembly_schema.VpcContextQuery, aws_cdk.cloud_assembly_schema.EndpointServiceAvailabilityZonesContextQuery, aws_cdk.cloud_assembly_schema.LoadBalancerContextQuery, aws_cdk.cloud_assembly_schema.LoadBalancerListenerContextQuery, aws_cdk.cloud_assembly_schema.SecurityGroupContextQuery], provider: aws_cdk.cloud_assembly_schema.ContextProvider) -&gt; None</dt><dd><tt>Indicate&nbsp;that&nbsp;a&nbsp;context&nbsp;key&nbsp;was&nbsp;expected.<br>
+&nbsp;<br>
+Contains&nbsp;instructions&nbsp;which&nbsp;will&nbsp;be&nbsp;emitted&nbsp;into&nbsp;the&nbsp;cloud&nbsp;assembly&nbsp;on&nbsp;how<br>
+the&nbsp;key&nbsp;should&nbsp;be&nbsp;supplied.<br>
+&nbsp;<br>
+:param&nbsp;key:&nbsp;The&nbsp;missing&nbsp;context&nbsp;key.<br>
+:param&nbsp;props:&nbsp;A&nbsp;set&nbsp;of&nbsp;provider-specific&nbsp;options.<br>
+:param&nbsp;provider:&nbsp;The&nbsp;provider&nbsp;from&nbsp;which&nbsp;we&nbsp;expect&nbsp;this&nbsp;context&nbsp;key&nbsp;to&nbsp;be&nbsp;obtained.</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-resolve"><strong>resolve</strong></a>(self, obj: Any) -&gt; Any</dt><dd><tt>Resolve&nbsp;a&nbsp;tokenized&nbsp;value&nbsp;in&nbsp;the&nbsp;context&nbsp;of&nbsp;the&nbsp;current&nbsp;stack.<br>
+&nbsp;<br>
+:param&nbsp;obj:&nbsp;-</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-to_json_string"><strong>to_json_string</strong></a>(self, obj: Any, space: Union[int, float, NoneType] = None) -&gt; str</dt><dd><tt>Convert&nbsp;an&nbsp;object,&nbsp;potentially&nbsp;containing&nbsp;tokens,&nbsp;to&nbsp;a&nbsp;JSON&nbsp;string.<br>
+&nbsp;<br>
+:param&nbsp;obj:&nbsp;-<br>
+:param&nbsp;space:&nbsp;-</tt></dd></dl>
+
+<hr>
+Class methods inherited from <a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a>:<br>
+<dl><dt><a name="SechubBatchUpdateStack-is_stack"><strong>is_stack</strong></a>(x: Any) -&gt; bool<font color="#909090"><font face="helvetica, arial"> from <a href="jsii._runtime.html#JSIIMeta">jsii._runtime.JSIIMeta</a></font></font></dt><dd><tt>Return&nbsp;whether&nbsp;the&nbsp;given&nbsp;object&nbsp;is&nbsp;a&nbsp;<a href="aws_cdk.core.html#Stack">Stack</a>.<br>
+&nbsp;<br>
+We&nbsp;do&nbsp;attribute&nbsp;detection&nbsp;since&nbsp;we&nbsp;can't&nbsp;reliably&nbsp;use&nbsp;'instanceof'.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;-</tt></dd></dl>
+
+<dl><dt><a name="SechubBatchUpdateStack-of"><strong>of</strong></a>(construct: constructs.IConstruct) -&gt; 'Stack'<font color="#909090"><font face="helvetica, arial"> from <a href="jsii._runtime.html#JSIIMeta">jsii._runtime.JSIIMeta</a></font></font></dt><dd><tt>Looks&nbsp;up&nbsp;the&nbsp;first&nbsp;stack&nbsp;scope&nbsp;in&nbsp;which&nbsp;``construct``&nbsp;is&nbsp;defined.<br>
+&nbsp;<br>
+Fails&nbsp;if&nbsp;there&nbsp;is&nbsp;no&nbsp;stack&nbsp;up&nbsp;the&nbsp;tree.<br>
+&nbsp;<br>
+:param&nbsp;construct:&nbsp;The&nbsp;construct&nbsp;to&nbsp;start&nbsp;the&nbsp;search&nbsp;from.</tt></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a>:<br>
+<dl><dt><strong>account</strong></dt>
+<dd><tt>The&nbsp;AWS&nbsp;account&nbsp;into&nbsp;which&nbsp;this&nbsp;stack&nbsp;will&nbsp;be&nbsp;deployed.<br>
+&nbsp;<br>
+This&nbsp;value&nbsp;is&nbsp;resolved&nbsp;according&nbsp;to&nbsp;the&nbsp;following&nbsp;rules:<br>
+&nbsp;<br>
+1.&nbsp;The&nbsp;value&nbsp;provided&nbsp;to&nbsp;``env.account``&nbsp;when&nbsp;the&nbsp;stack&nbsp;is&nbsp;defined.&nbsp;This&nbsp;can<br>
+&nbsp;&nbsp;&nbsp;either&nbsp;be&nbsp;a&nbsp;concerete&nbsp;account&nbsp;(e.g.&nbsp;``585695031111``)&nbsp;or&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;``Aws.accountId``&nbsp;token.<br>
+2.&nbsp;``Aws.accountId``,&nbsp;which&nbsp;represents&nbsp;the&nbsp;CloudFormation&nbsp;intrinsic&nbsp;reference<br>
+&nbsp;&nbsp;&nbsp;``{&nbsp;"Ref":&nbsp;"AWS::AccountId"&nbsp;}``&nbsp;encoded&nbsp;as&nbsp;a&nbsp;string&nbsp;token.<br>
+&nbsp;<br>
+Preferably,&nbsp;you&nbsp;should&nbsp;use&nbsp;the&nbsp;return&nbsp;value&nbsp;as&nbsp;an&nbsp;opaque&nbsp;string&nbsp;and&nbsp;not<br>
+attempt&nbsp;to&nbsp;parse&nbsp;it&nbsp;to&nbsp;implement&nbsp;your&nbsp;logic.&nbsp;If&nbsp;you&nbsp;do,&nbsp;you&nbsp;must&nbsp;first<br>
+check&nbsp;that&nbsp;it&nbsp;is&nbsp;a&nbsp;concerete&nbsp;value&nbsp;an&nbsp;not&nbsp;an&nbsp;unresolved&nbsp;token.&nbsp;If&nbsp;this<br>
+value&nbsp;is&nbsp;an&nbsp;unresolved&nbsp;token&nbsp;(``Token.isUnresolved(stack.account)``&nbsp;returns<br>
+``true``),&nbsp;this&nbsp;implies&nbsp;that&nbsp;the&nbsp;user&nbsp;wishes&nbsp;that&nbsp;this&nbsp;stack&nbsp;will&nbsp;synthesize<br>
+into&nbsp;a&nbsp;**account-agnostic&nbsp;template**.&nbsp;In&nbsp;this&nbsp;case,&nbsp;your&nbsp;code&nbsp;should&nbsp;either<br>
+fail&nbsp;(throw&nbsp;an&nbsp;error,&nbsp;emit&nbsp;a&nbsp;synth&nbsp;error&nbsp;using&nbsp;``Annotations.of(construct).addError()``)&nbsp;or<br>
+implement&nbsp;some&nbsp;other&nbsp;region-agnostic&nbsp;behavior.</tt></dd>
+</dl>
+<dl><dt><strong>artifact_id</strong></dt>
+<dd><tt>The&nbsp;ID&nbsp;of&nbsp;the&nbsp;cloud&nbsp;assembly&nbsp;artifact&nbsp;for&nbsp;this&nbsp;stack.</tt></dd>
+</dl>
+<dl><dt><strong>availability_zones</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;list&nbsp;of&nbsp;AZs&nbsp;that&nbsp;are&nbsp;available&nbsp;in&nbsp;the&nbsp;AWS&nbsp;environment&nbsp;(account/region)&nbsp;associated&nbsp;with&nbsp;this&nbsp;stack.<br>
+&nbsp;<br>
+If&nbsp;the&nbsp;stack&nbsp;is&nbsp;environment-agnostic&nbsp;(either&nbsp;account&nbsp;and/or&nbsp;region&nbsp;are<br>
+tokens),&nbsp;this&nbsp;property&nbsp;will&nbsp;return&nbsp;an&nbsp;array&nbsp;with&nbsp;2&nbsp;tokens&nbsp;that&nbsp;will&nbsp;resolve<br>
+at&nbsp;deploy-time&nbsp;to&nbsp;the&nbsp;first&nbsp;two&nbsp;availability&nbsp;zones&nbsp;returned&nbsp;from&nbsp;CloudFormation's<br>
+``Fn::GetAZs``&nbsp;intrinsic&nbsp;function.<br>
+&nbsp;<br>
+If&nbsp;they&nbsp;are&nbsp;not&nbsp;available&nbsp;in&nbsp;the&nbsp;context,&nbsp;returns&nbsp;a&nbsp;set&nbsp;of&nbsp;dummy&nbsp;values&nbsp;and<br>
+reports&nbsp;them&nbsp;as&nbsp;missing,&nbsp;and&nbsp;let&nbsp;the&nbsp;CLI&nbsp;resolve&nbsp;them&nbsp;by&nbsp;calling&nbsp;EC2<br>
+``DescribeAvailabilityZones``&nbsp;on&nbsp;the&nbsp;target&nbsp;environment.<br>
+&nbsp;<br>
+To&nbsp;specify&nbsp;a&nbsp;different&nbsp;strategy&nbsp;for&nbsp;selecting&nbsp;availability&nbsp;zones&nbsp;override&nbsp;this&nbsp;method.</tt></dd>
+</dl>
+<dl><dt><strong>dependencies</strong></dt>
+<dd><tt>Return&nbsp;the&nbsp;stacks&nbsp;this&nbsp;stack&nbsp;depends&nbsp;on.</tt></dd>
+</dl>
+<dl><dt><strong>environment</strong></dt>
+<dd><tt>The&nbsp;environment&nbsp;coordinates&nbsp;in&nbsp;which&nbsp;this&nbsp;stack&nbsp;is&nbsp;deployed.<br>
+&nbsp;<br>
+In&nbsp;the&nbsp;form<br>
+``aws://account/region``.&nbsp;Use&nbsp;``stack.account``&nbsp;and&nbsp;``stack.region``&nbsp;to&nbsp;obtain<br>
+the&nbsp;specific&nbsp;values,&nbsp;no&nbsp;need&nbsp;to&nbsp;parse.<br>
+&nbsp;<br>
+You&nbsp;can&nbsp;use&nbsp;this&nbsp;value&nbsp;to&nbsp;determine&nbsp;if&nbsp;two&nbsp;stacks&nbsp;are&nbsp;targeting&nbsp;the&nbsp;same<br>
+environment.<br>
+&nbsp;<br>
+If&nbsp;either&nbsp;``stack.account``&nbsp;or&nbsp;``stack.region``&nbsp;are&nbsp;not&nbsp;concrete&nbsp;values&nbsp;(e.g.<br>
+``Aws.account``&nbsp;or&nbsp;``Aws.region``)&nbsp;the&nbsp;special&nbsp;strings&nbsp;``unknown-account``&nbsp;and/or<br>
+``unknown-region``&nbsp;will&nbsp;be&nbsp;used&nbsp;respectively&nbsp;to&nbsp;indicate&nbsp;this&nbsp;stack&nbsp;is<br>
+region/account-agnostic.</tt></dd>
+</dl>
+<dl><dt><strong>nested</strong></dt>
+<dd><tt>Indicates&nbsp;if&nbsp;this&nbsp;is&nbsp;a&nbsp;nested&nbsp;stack,&nbsp;in&nbsp;which&nbsp;case&nbsp;``parentStack``&nbsp;will&nbsp;include&nbsp;a&nbsp;reference&nbsp;to&nbsp;it's&nbsp;parent.</tt></dd>
+</dl>
+<dl><dt><strong>nested_stack_parent</strong></dt>
+<dd><tt>If&nbsp;this&nbsp;is&nbsp;a&nbsp;nested&nbsp;stack,&nbsp;returns&nbsp;it's&nbsp;parent&nbsp;stack.</tt></dd>
+</dl>
+<dl><dt><strong>nested_stack_resource</strong></dt>
+<dd><tt>If&nbsp;this&nbsp;is&nbsp;a&nbsp;nested&nbsp;stack,&nbsp;this&nbsp;represents&nbsp;its&nbsp;``AWS::CloudFormation::Stack``&nbsp;resource.<br>
+&nbsp;<br>
+``undefined``&nbsp;for&nbsp;top-level&nbsp;(non-nested)&nbsp;stacks.</tt></dd>
+</dl>
+<dl><dt><strong>notification_arns</strong></dt>
+<dd><tt>Returns&nbsp;the&nbsp;list&nbsp;of&nbsp;notification&nbsp;Amazon&nbsp;Resource&nbsp;Names&nbsp;(ARNs)&nbsp;for&nbsp;the&nbsp;current&nbsp;stack.</tt></dd>
+</dl>
+<dl><dt><strong>parent_stack</strong></dt>
+<dd><tt>(deprecated)&nbsp;Returns&nbsp;the&nbsp;parent&nbsp;of&nbsp;a&nbsp;nested&nbsp;stack.<br>
+&nbsp;<br>
+:deprecated:&nbsp;use&nbsp;``nestedStackParent``<br>
+&nbsp;<br>
+:stability:&nbsp;deprecated</tt></dd>
+</dl>
+<dl><dt><strong>partition</strong></dt>
+<dd><tt>The&nbsp;partition&nbsp;in&nbsp;which&nbsp;this&nbsp;stack&nbsp;is&nbsp;defined.</tt></dd>
+</dl>
+<dl><dt><strong>region</strong></dt>
+<dd><tt>The&nbsp;AWS&nbsp;region&nbsp;into&nbsp;which&nbsp;this&nbsp;stack&nbsp;will&nbsp;be&nbsp;deployed&nbsp;(e.g.&nbsp;``us-west-2``).<br>
+&nbsp;<br>
+This&nbsp;value&nbsp;is&nbsp;resolved&nbsp;according&nbsp;to&nbsp;the&nbsp;following&nbsp;rules:<br>
+&nbsp;<br>
+1.&nbsp;The&nbsp;value&nbsp;provided&nbsp;to&nbsp;``env.region``&nbsp;when&nbsp;the&nbsp;stack&nbsp;is&nbsp;defined.&nbsp;This&nbsp;can<br>
+&nbsp;&nbsp;&nbsp;either&nbsp;be&nbsp;a&nbsp;concerete&nbsp;region&nbsp;(e.g.&nbsp;``us-west-2``)&nbsp;or&nbsp;the&nbsp;``Aws.region``<br>
+&nbsp;&nbsp;&nbsp;token.<br>
+2.&nbsp;``Aws.region``,&nbsp;which&nbsp;is&nbsp;represents&nbsp;the&nbsp;CloudFormation&nbsp;intrinsic&nbsp;reference<br>
+&nbsp;&nbsp;&nbsp;``{&nbsp;"Ref":&nbsp;"AWS::Region"&nbsp;}``&nbsp;encoded&nbsp;as&nbsp;a&nbsp;string&nbsp;token.<br>
+&nbsp;<br>
+Preferably,&nbsp;you&nbsp;should&nbsp;use&nbsp;the&nbsp;return&nbsp;value&nbsp;as&nbsp;an&nbsp;opaque&nbsp;string&nbsp;and&nbsp;not<br>
+attempt&nbsp;to&nbsp;parse&nbsp;it&nbsp;to&nbsp;implement&nbsp;your&nbsp;logic.&nbsp;If&nbsp;you&nbsp;do,&nbsp;you&nbsp;must&nbsp;first<br>
+check&nbsp;that&nbsp;it&nbsp;is&nbsp;a&nbsp;concerete&nbsp;value&nbsp;an&nbsp;not&nbsp;an&nbsp;unresolved&nbsp;token.&nbsp;If&nbsp;this<br>
+value&nbsp;is&nbsp;an&nbsp;unresolved&nbsp;token&nbsp;(``Token.isUnresolved(stack.region)``&nbsp;returns<br>
+``true``),&nbsp;this&nbsp;implies&nbsp;that&nbsp;the&nbsp;user&nbsp;wishes&nbsp;that&nbsp;this&nbsp;stack&nbsp;will&nbsp;synthesize<br>
+into&nbsp;a&nbsp;**region-agnostic&nbsp;template**.&nbsp;In&nbsp;this&nbsp;case,&nbsp;your&nbsp;code&nbsp;should&nbsp;either<br>
+fail&nbsp;(throw&nbsp;an&nbsp;error,&nbsp;emit&nbsp;a&nbsp;synth&nbsp;error&nbsp;using&nbsp;``Annotations.of(construct).addError()``)&nbsp;or<br>
+implement&nbsp;some&nbsp;other&nbsp;region-agnostic&nbsp;behavior.</tt></dd>
+</dl>
+<dl><dt><strong>stack_id</strong></dt>
+<dd><tt>The&nbsp;ID&nbsp;of&nbsp;the&nbsp;stack.<br>
+&nbsp;<br>
+Example::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Example&nbsp;automatically&nbsp;generated.&nbsp;See&nbsp;<a href="https://github.com/aws/jsii/issues/826">https://github.com/aws/jsii/issues/826</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;After&nbsp;resolving,&nbsp;looks&nbsp;like<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"arn:aws:cloudformation:us-west-2:123456789012:stack/teststack/51af3dc0-da77-11e4-872e-1234567db123"</tt></dd>
+</dl>
+<dl><dt><strong>stack_name</strong></dt>
+<dd><tt>The&nbsp;concrete&nbsp;CloudFormation&nbsp;physical&nbsp;stack&nbsp;name.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;either&nbsp;the&nbsp;name&nbsp;defined&nbsp;explicitly&nbsp;in&nbsp;the&nbsp;``stackName``&nbsp;prop&nbsp;or<br>
+allocated&nbsp;based&nbsp;on&nbsp;the&nbsp;stack's&nbsp;location&nbsp;in&nbsp;the&nbsp;construct&nbsp;tree.&nbsp;Stacks&nbsp;that<br>
+are&nbsp;directly&nbsp;defined&nbsp;under&nbsp;the&nbsp;app&nbsp;use&nbsp;their&nbsp;construct&nbsp;``id``&nbsp;as&nbsp;their&nbsp;stack<br>
+name.&nbsp;Stacks&nbsp;that&nbsp;are&nbsp;defined&nbsp;deeper&nbsp;within&nbsp;the&nbsp;tree&nbsp;will&nbsp;use&nbsp;a&nbsp;hashed&nbsp;naming<br>
+scheme&nbsp;based&nbsp;on&nbsp;the&nbsp;construct&nbsp;path&nbsp;to&nbsp;ensure&nbsp;uniqueness.<br>
+&nbsp;<br>
+If&nbsp;you&nbsp;wish&nbsp;to&nbsp;obtain&nbsp;the&nbsp;deploy-time&nbsp;AWS::StackName&nbsp;intrinsic,<br>
+you&nbsp;can&nbsp;use&nbsp;``Aws.stackName``&nbsp;directly.</tt></dd>
+</dl>
+<dl><dt><strong>synthesizer</strong></dt>
+<dd><tt>Synthesis&nbsp;method&nbsp;for&nbsp;this&nbsp;stack.</tt></dd>
+</dl>
+<dl><dt><strong>tags</strong></dt>
+<dd><tt>Tags&nbsp;to&nbsp;be&nbsp;applied&nbsp;to&nbsp;the&nbsp;stack.</tt></dd>
+</dl>
+<dl><dt><strong>template_file</strong></dt>
+<dd><tt>The&nbsp;name&nbsp;of&nbsp;the&nbsp;CloudFormation&nbsp;template&nbsp;file&nbsp;emitted&nbsp;to&nbsp;the&nbsp;output&nbsp;directory&nbsp;during&nbsp;synthesis.<br>
+&nbsp;<br>
+Example::<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Example&nbsp;automatically&nbsp;generated&nbsp;without&nbsp;compilation.&nbsp;See&nbsp;<a href="https://github.com/aws/jsii/issues/826">https://github.com/aws/jsii/issues/826</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;"MyStack.template.json"</tt></dd>
+</dl>
+<dl><dt><strong>template_options</strong></dt>
+<dd><tt>Options&nbsp;for&nbsp;CloudFormation&nbsp;template&nbsp;(like&nbsp;version,&nbsp;transform,&nbsp;description).</tt></dd>
+</dl>
+<dl><dt><strong>termination_protection</strong></dt>
+<dd><tt>Whether&nbsp;termination&nbsp;protection&nbsp;is&nbsp;enabled&nbsp;for&nbsp;this&nbsp;stack.</tt></dd>
+</dl>
+<dl><dt><strong>url_suffix</strong></dt>
+<dd><tt>The&nbsp;Amazon&nbsp;domain&nbsp;suffix&nbsp;for&nbsp;the&nbsp;region&nbsp;in&nbsp;which&nbsp;this&nbsp;stack&nbsp;is&nbsp;defined.</tt></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="aws_cdk.core.html#Stack">aws_cdk.core.Stack</a>:<br>
+<dl><dt><strong>__jsii_ifaces__</strong> = [&lt;class 'constructs.IConstruct'&gt;, &lt;class 'aws_cdk.core.IConstruct'&gt;, &lt;class 'aws_cdk.core.ITaggable'&gt;]</dl>
+
+<dl><dt><strong>__jsii_type__</strong> = '@aws-cdk/core.Stack'</dl>
+
+<hr>
+Class methods inherited from <a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>:<br>
+<dl><dt><a name="SechubBatchUpdateStack-is_construct"><strong>is_construct</strong></a>(x: Any) -&gt; bool<font color="#909090"><font face="helvetica, arial"> from <a href="jsii._runtime.html#JSIIMeta">jsii._runtime.JSIIMeta</a></font></font></dt><dd><tt>Return&nbsp;whether&nbsp;the&nbsp;given&nbsp;object&nbsp;is&nbsp;a&nbsp;Construct.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;-</tt></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="aws_cdk.core.html#Construct">aws_cdk.core.Construct</a>:<br>
+<dl><dt><strong>node</strong></dt>
+<dd><tt>The&nbsp;construct&nbsp;tree&nbsp;node&nbsp;associated&nbsp;with&nbsp;this&nbsp;construct.</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="constructs.html#Construct">constructs.Construct</a>:<br>
+<dl><dt><a name="SechubBatchUpdateStack-to_string"><strong>to_string</strong></a>(self) -&gt; str</dt><dd><tt>Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;construct.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="constructs.html#Construct">constructs.Construct</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
