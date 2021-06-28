@@ -12,7 +12,7 @@ SechubBatchUpdateStack(
     app,
     "sechub-finding-suppression",
     synthesizer=core.DefaultStackSynthesizer(
-        generate_bootstrap_version_rule=False,
+        generate_bootstrap_version_rule=True,
     ),
 )
 VPCTest(app, "vpc-test-suppression-1")

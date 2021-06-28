@@ -61,7 +61,7 @@ class SechubBatchUpdateStack(core.Stack):
         )
 
         batch_lambda = self.create_lambda_function(
-            is_inline=True,
+            is_inline=False,
             batch_lambda_role=batch_lambda_role,
             function_name=function_name,
         )
