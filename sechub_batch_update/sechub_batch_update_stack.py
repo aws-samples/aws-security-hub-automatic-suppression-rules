@@ -79,7 +79,6 @@ class SechubBatchUpdateStack(core.Stack):
                         "logs:CreateLogGroup",
                         "logs:CreateLogStream",
                         "logs:PutLogEvents",
-                        "*",
                     ],
                     resources=[
                         f"arn:aws:logs:{core.Aws.REGION}:{core.Aws.ACCOUNT_ID}:log-group:/aws/lambda/{function_name}:*"
