@@ -7,6 +7,7 @@ from aws_cdk import (
     aws_sqs as sqs,
     aws_lambda_event_sources,
     aws_kms,
+    aws_sam,
 )
 
 from sechub_batch_update.sechub_suppression import SecurityHubSuppression
@@ -59,24 +60,10 @@ class SechubBatchUpdateStack(core.Stack):
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"),
         )
 
-        lambda_layer = self.create_dependencies_layer(
-            id="lambdalayer",
-            requirements_path="./lambda/requirements.txt",
-            output_dir="./lambda_layer",
-        )
-
-        batch_lambda = _lambda.Function(
-            self,
-            "batchupdate",
-            runtime=_lambda.Runtime.PYTHON_3_8,
-            code=_lambda.Code.asset("lambda"),
-            layers=[lambda_layer],
-            handler="batch_update.handler",
-            role=batch_lambda_role,
+        batch_lambda = self.create_lambda_function(
+            is_inline=True,
+            batch_lambda_role=batch_lambda_role,
             function_name=function_name,
-            description="Suppression lambda for Security Hub implements batch update findings",
-            retry_attempts=2,
-            timeout=core.Duration.minutes(2),
         )
 
         batch_lambda_policy = iam.ManagedPolicy(
@@ -190,3 +177,55 @@ class SechubBatchUpdateStack(core.Stack):
                 f"pip install -r {requirements_path} -t {output_dir}/python".split()
             )
         return _lambda.LayerVersion(self, id, code=_lambda.Code.from_asset(output_dir))
+
+    # https://github.com/awslabs/aws-lambda-powertools-python/issues/355#issuecomment-813393424
+    # https://serverlessrepo.aws.amazon.com/applications/eu-west-1/057560766410/aws-lambda-powertools-python-layer
+    def create_powertools_layer(self: str) -> _lambda.LayerVersion:
+        POWER_TOOLS_VER = "1.17.0"
+        POWER_TOOLS_ARN = "arn:aws:serverlessrepo:eu-west-1:057560766410:applications/aws-lambda-powertools-python-layer"
+        POWERTOOLS_BASE_NAME = "AWSLambdaPowertools"
+
+        powertools_application = aws_sam.CfnApplication(
+            self,
+            f"{POWERTOOLS_BASE_NAME}Application",
+            location={
+                "applicationId": POWER_TOOLS_ARN,
+                "semanticVersion": POWER_TOOLS_VER,
+            },
+        )
+
+        return _lambda.LayerVersion.from_layer_version_arn(
+            self,
+            f"{POWERTOOLS_BASE_NAME}",
+            powertools_application.get_att("Outputs.LayerVersionArn").to_string(),
+        )
+
+    def create_lambda_function(self, is_inline, batch_lambda_role, function_name):
+        if is_inline:
+            lambda_layer = self.create_powertools_layer()
+            with open(f"./lambda/batch_update.py", encoding="utf8") as fp:
+                handler_code = fp.read()
+                lambda_code = _lambda.InlineCode(handler_code)
+                lambda_handler = "index.handler"
+        else:
+            lambda_layer = self.create_dependencies_layer(
+                id="lambdalayer",
+                requirements_path="./lambda/requirements.txt",
+                output_dir="./lambda_layer",
+            )
+            lambda_code = _lambda.Code.asset("lambda")
+            lambda_handler = "batch_update.handler"
+
+        return _lambda.Function(
+            self,
+            "batchupdate",
+            runtime=_lambda.Runtime.PYTHON_3_8,
+            code=lambda_code,
+            layers=[lambda_layer],
+            handler=lambda_handler,
+            role=batch_lambda_role,
+            function_name=function_name,
+            description="Suppression lambda for Security Hub implements batch update findings",
+            retry_attempts=2,
+            timeout=core.Duration.minutes(2),
+        )
