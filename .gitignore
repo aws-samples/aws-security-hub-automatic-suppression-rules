@@ -1,0 +1,4 @@
+.DS_Store
+cdk.out
+__pycache__
+lambda_layer
