@@ -124,23 +124,8 @@ class SechubBatchUpdateStack(core.Stack):
             encryption=sqs.QueueEncryption.KMS,
         )
 
-        enforce_tls_statement = iam.PolicyStatement(
-            sid="Enforce TLS for all principals",
-            effect=iam.Effect.DENY,
-            principals=[
-                iam.AnyPrincipal(),
-            ],
-            actions=[
-                "sqs:*",
-            ],
-            resources=[queue.queue_arn],
-            conditions={
-                "Bool": {"aws:secureTransport": "false"},
-            },
-        )
-
-        queue.add_to_resource_policy(enforce_tls_statement)
-        dead_letter_queue.add_to_resource_policy(enforce_tls_statement)
+        queue.add_to_resource_policy(self.get_enforce_tls_statement(queue.queue_arn))
+        dead_letter_queue.add_to_resource_policy(self.get_enforce_tls_statement(dead_letter_queue.queue_arn))
 
         batch_lambda.add_event_source(
             aws_lambda_event_sources.SqsEventSource(
@@ -160,12 +145,28 @@ class SechubBatchUpdateStack(core.Stack):
             self, "securityhub-suppression-example", props
         )
 
+    def get_enforce_tls_statement(self, queue_arn):
+        enforce_tls_statement = iam.PolicyStatement(
+            sid="Enforce TLS for all principals",
+            effect=iam.Effect.DENY,
+            principals=[
+                iam.AnyPrincipal(),
+            ],
+            actions=[
+                "sqs:*",
+            ],
+            resources=[queue_arn],
+            conditions={
+                "Bool": {"aws:secureTransport": "false"},
+            },
+        )
+        return enforce_tls_statement
+
     """
     Performs a local pip install to create a folder of the dependencies.
     CDK will then bundle the layer folder, create assets zip, create hash, and upload to the assets zip to the s3 bucket to create the layer.
     https://github.com/aws-samples/aws-cdk-examples/issues/130
     """
-
     def create_dependencies_layer(
         self, id: str, requirements_path: str, output_dir: str
     ) -> _lambda.LayerVersion:
